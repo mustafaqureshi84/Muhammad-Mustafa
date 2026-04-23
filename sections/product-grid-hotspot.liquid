@@ -1,3 +1,7 @@
+{% comment %}
+  Custom Product Grid Hotspot Section - Built for EcomExperts Test
+{% endcomment %}
+
 <style>
   #shopify-section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top_desktop }}px;
@@ -63,7 +67,7 @@
     color: #333;
   }
 
-  /* ── Overlay ── */
+  /* ── Overlay CSS ── */
   #shopify-section-{{ section.id }} .pgh-overlay {
     display: none;
     position: fixed;
@@ -76,7 +80,7 @@
   #shopify-section-{{ section.id }} .pgh-overlay.active  { display: block; }
   #shopify-section-{{ section.id }} .pgh-overlay.visible { opacity: 1; }
 
-  /* ── Popup ── */
+  /* ── Popup CSS ── */
   #shopify-section-{{ section.id }} .pgh-popup {
     display: none;
     position: fixed;
@@ -161,7 +165,7 @@
     margin: 0 0 10px 0;
   }
 
-  /* Color swatches */
+  /* Color swatches CSS */
   #shopify-section-{{ section.id }} .pgh-color-options {
     display: flex;
     flex-wrap: wrap;
@@ -197,7 +201,7 @@
     box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
   }
 
-  /* Size select - custom dropdown */
+  /* Size select - custom dropdown CSS */
   #shopify-section-{{ section.id }} .pgh-size-select-wrapper {
     position: relative;
     width: 100%;
@@ -294,7 +298,7 @@
     margin-bottom: 18px;
   }
 
-  /* Add to cart */
+  /* Add to cart CSS */
   #shopify-section-{{ section.id }} .pgh-add-to-cart {
     display: flex;
     align-items: center;
@@ -317,7 +321,7 @@
   #shopify-section-{{ section.id }} .pgh-add-to-cart svg { width: 30px; height: 12px; }
   #shopify-section-{{ section.id }} .pgh-add-to-cart.loading { opacity: 0.7; pointer-events: none; }
 
-  /* Cart feedback */
+  /* Cart feedback CSS*/
   #shopify-section-{{ section.id }} .pgh-cart-msg {
     margin-top: 10px;
     font-size: 13px;
@@ -327,7 +331,7 @@
   #shopify-section-{{ section.id }} .pgh-cart-msg.success { color: #2a7a2a; }
   #shopify-section-{{ section.id }} .pgh-cart-msg.error   { color: #c0392b; }
 
-  /* Mobile */
+  /* Mobile View CSS */
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile }}px;
@@ -474,17 +478,17 @@
         {%- endif -%}
 
         <div class="pgh-grid-item" {{ block.shopify_attributes }}>
-{%- if display_image_url != nil -%}
-  <img
-    src="{{ display_image_url }}"
-    alt="{{ display_image_alt }}"
-    width="{{ display_image.width }}"
-    height="{{ display_image.height }}"
-    loading="lazy"
-  >
-{%- else -%}
-  {{ 'product-1' | placeholder_svg_tag: 'pgh-placeholder-svg' }}
-{%- endif -%}
+          {%- if display_image_url != nil -%}
+            <img
+              src="{{ display_image_url }}"
+              alt="{{ display_image_alt }}"
+              width="{{ display_image.width }}"
+              height="{{ display_image.height }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'pgh-placeholder-svg' }}
+          {%- endif -%}
 
           <button
             class="pgh-hotspot"
