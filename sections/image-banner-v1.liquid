@@ -1,0 +1,735 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
+  {%- style -%}
+    @media screen and (min-width: 750px) {
+      #Banner-{{ section.id }}::before,
+      #Banner-{{ section.id }} .banner__media::before {
+        padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+        content: '';
+        display: block;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{%- style -%}
+  #Banner-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #Banner-{{ section.id }}::after {
+    opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+
+  /* Desktop: media is absolute behind content */
+  #Banner-{{ section.id }} .banner__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  #Banner-{{ section.id }} .banner__media img,
+  #Banner-{{ section.id }} .banner__media .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #Banner-{{ section.id }} .banner__content {
+    position: relative;
+    z-index: 2;
+    min-height: 100%;
+    display: flex;
+    align-items: {{ section.settings.desktop_vertical_alignment }};
+    justify-content: {{ section.settings.desktop_horizontal_alignment }};
+    padding: 60px;
+  }
+
+  #Banner-{{ section.id }} .banner__box {
+    max-width: {{ section.settings.content_width }}px;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  #Banner-{{ section.id }} .banner__heading {
+    margin: 0 0 24px 0;
+  }
+
+  #Banner-{{ section.id }} .banner__text {
+    margin: 0 0 32px 0;
+    max-width: 100%;
+  }
+
+  #Banner-{{ section.id }} .banner__text p {
+    margin: 0;
+  }
+
+  #Banner-{{ section.id }} .banner__buttons .button {
+    opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #Banner-{{ section.id }} .button__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    flex-shrink: 0;
+  }
+
+  #Banner-{{ section.id }} .button__icon svg {
+    display: block;
+  }
+
+  #Banner-{{ section.id }} .banner__buttons .button:hover .button__icon svg path {
+    fill: #000000;
+  }
+
+  /* Banner wrapper */
+  #BannerWrapper-{{ section.id }} {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Banner bar */
+  #BannerBar-{{ section.id }} {
+    background-color: {{ section.settings.banner_bar_bg_color }};
+    color: {{ section.settings.banner_bar_text_color }};
+    font-size: {{ section.settings.banner_bar_text_size }}px;
+    text-align: center;
+    padding: 12px 20px;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    text-transform: uppercase;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  #BannerBar-{{ section.id }} .banner-bar-text-mobile {
+    display: none;
+  }
+
+  /* ── Mobile layout ── */
+  @media screen and (max-width: 749px) {
+    /* The banner itself becomes a flex column so text sits above image */
+    #Banner-{{ section.id }} {
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+
+    /* Hide the desktop absolute-positioned media on mobile */
+    #Banner-{{ section.id }} .banner__media--desktop {
+      display: none;
+    }
+
+    /* Mobile text block: sits above the image, normal flow */
+    #Banner-{{ section.id }} .banner__mobile-text {
+      position: relative;
+      z-index: 2;
+      padding: 32px 24px 24px;
+      text-align: {{ section.settings.mobile_content_alignment }};
+      background: {{ section.settings.mobile_text_bg_color }};
+    }
+
+    #Banner-{{ section.id }} .banner__mobile-text .banner__heading {
+      margin: 0 0 16px 0;
+    }
+
+    #Banner-{{ section.id }} .banner__mobile-text .banner__text {
+      margin: 0;
+    }
+
+    /* Mobile image + button wrapper */
+    #Banner-{{ section.id }} .banner__mobile-image-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #Banner-{{ section.id }} .banner__media-mobile {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #Banner-{{ section.id }} .banner__media-mobile img,
+    #Banner-{{ section.id }} .banner__media-mobile .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Button floats over the bottom of the mobile image */
+    #Banner-{{ section.id }} .banner__mobile-buttons {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      display: flex;
+      justify-content: {{ section.settings.mobile_horizontal_alignment }};
+      padding: 20px 24px;
+    }
+
+    #Banner-{{ section.id }} .banner__mobile-buttons .button {
+      opacity: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #Banner-{{ section.id }} .banner__mobile-buttons .button:hover .button__icon svg path {
+      fill: #000000;
+    }
+
+    /* Hide the desktop content area on mobile */
+    #Banner-{{ section.id }} .banner__content--desktop {
+      display: none;
+    }
+
+    #BannerBar-{{ section.id }} {
+      font-size: {{ section.settings.banner_bar_text_size_mobile }}px;
+      line-height: 1.4;
+    }
+
+    #BannerBar-{{ section.id }} .banner-bar-text-desktop {
+      display: none;
+    }
+
+    #BannerBar-{{ section.id }} .banner-bar-text-mobile {
+      display: inline;
+    }
+  }
+
+  /* On desktop, hide mobile-only elements */
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }} .banner__mobile-text,
+    #Banner-{{ section.id }} .banner__mobile-image-wrap {
+      display: none;
+    }
+
+    #BannerBar-{{ section.id }} .banner-bar-text-desktop {
+      display: inline;
+    }
+
+    #BannerBar-{{ section.id }} .banner-bar-text-mobile {
+      display: none;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign full_width = '100vw'
+  assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+  assign mobile_image = section.settings.image_mobile | default: section.settings.image
+  assign banner_bar_text_mobile = section.settings.banner_bar_text_mobile | default: section.settings.banner_bar_text
+-%}
+
+<div id="BannerWrapper-{{ section.id }}" class="banner-wrapper-v1">
+  <div
+    id="Banner-{{ section.id }}"
+    class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  >
+    {%- if section.settings.image != blank -%}
+      <div class="banner__media banner__media--desktop media{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- liquid
+          assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio
+        -%}
+        {{
+          section.settings.image
+          | image_url: width: 3840
+          | image_tag:
+            width: section.settings.image.width,
+            height: image_height,
+            sizes: full_width,
+            widths: widths,
+            fetchpriority: fetch_priority,
+            alt: section.settings.image.alt
+        }}
+      </div>
+    {%- else -%}
+      <div class="banner__media banner__media--desktop media{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    <div class="banner__content banner__content--desktop page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <h2
+                class="banner__heading inline-richtext {{ block.settings.heading_size }}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.heading }}
+              </h2>
+
+            {%- when 'text' -%}
+              <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+                <p>{{ block.settings.text }}</p>
+              </div>
+
+            {%- when 'buttons' -%}
+              <div
+                class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.button_label_1 != blank -%}
+                  <a
+                    {% if block.settings.button_link_1 == blank %}
+                      role="link" aria-disabled="true"
+                    {% else %}
+                      href="{{ block.settings.button_link_1 }}"
+                    {% endif %}
+                    class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+                  >
+                    <span>{{- block.settings.button_label_1 | escape -}}</span>
+                    <span class="button__icon" aria-hidden="true">
+                      <svg width="26" height="12" viewBox="0 0 26 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.75 4.77298L7.37629e-08 4.77298L-7.37629e-08 6.27298L0.75 6.27298L0.75 4.77298ZM25.2803 6.05331C25.5732 5.76042 25.5732 5.28554 25.2803 4.99265L20.5074 0.21968C20.2145 -0.073213 19.7396 -0.0732131 19.4467 0.21968C19.1538 0.512574 19.1538 0.987447 19.4467 1.28034L23.6893 5.52298L19.4467 9.76562C19.1538 10.0585 19.1538 10.5334 19.4467 10.8263C19.7396 11.1192 20.2145 11.1192 20.5074 10.8263L25.2803 6.05331ZM0.75 6.27298L24.75 6.27298L24.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="white"/>
+                      </svg>
+                    </span>
+                  </a>
+                {%- endif -%}
+
+                {%- if block.settings.button_label_2 != blank -%}
+                  <a
+                    {% if block.settings.button_link_2 == blank %}
+                      role="link" aria-disabled="true"
+                    {% else %}
+                      href="{{ block.settings.button_link_2 }}"
+                    {% endif %}
+                    class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+                  >
+                    <span>{{- block.settings.button_label_2 | escape -}}</span>
+                    <span class="button__icon" aria-hidden="true">
+                      <svg width="26" height="12" viewBox="0 0 26 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.75 4.77298L7.37629e-08 4.77298L-7.37629e-08 6.27298L0.75 6.27298L0.75 4.77298ZM25.2803 6.05331C25.5732 5.76042 25.5732 5.28554 25.2803 4.99265L20.5074 0.21968C20.2145 -0.073213 19.7396 -0.0732131 19.4467 0.21968C19.1538 0.512574 19.1538 0.987447 19.4467 1.28034L23.6893 5.52298L19.4467 9.76562C19.1538 10.0585 19.1538 10.5334 19.4467 10.8263C19.7396 11.1192 20.2145 11.1192 20.5074 10.8263L25.2803 6.05331ZM0.75 6.27298L24.75 6.27298L24.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="white"/>
+                      </svg>
+                    </span>
+                  </a>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="banner__mobile-text">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'heading' -%}
+            <h2
+              class="banner__heading inline-richtext {{ block.settings.heading_size }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.heading }}
+            </h2>
+
+          {%- when 'text' -%}
+            <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+              <p>{{ block.settings.text_mobile | default: block.settings.text }}</p>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="banner__mobile-image-wrap">
+      <div class="banner__media-mobile">
+        {%- if mobile_image != blank -%}
+          {%- liquid
+            assign mobile_image_height = mobile_image.width | divided_by: mobile_image.aspect_ratio
+          -%}
+          {{
+            mobile_image
+            | image_url: width: 750
+            | image_tag:
+              width: mobile_image.width,
+              height: mobile_image_height,
+              sizes: '100vw',
+              widths: '375, 550, 750',
+              fetchpriority: fetch_priority,
+              alt: mobile_image.alt
+          }}
+        {%- else -%}
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'buttons' -%}
+          <div class="banner__mobile-buttons" {{ block.shopify_attributes }}>
+            {%- if block.settings.button_label_1 != blank -%}
+              <a
+                {% if block.settings.button_link_1 == blank %}
+                  role="link" aria-disabled="true"
+                {% else %}
+                  href="{{ block.settings.button_link_1 }}"
+                {% endif %}
+                class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+              >
+                <span>{{- block.settings.button_label_1 | escape -}}</span>
+                <span class="button__icon" aria-hidden="true">
+                  <svg width="26" height="12" viewBox="0 0 26 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.75 4.77298L7.37629e-08 4.77298L-7.37629e-08 6.27298L0.75 6.27298L0.75 4.77298ZM25.2803 6.05331C25.5732 5.76042 25.5732 5.28554 25.2803 4.99265L20.5074 0.21968C20.2145 -0.073213 19.7396 -0.0732131 19.4467 0.21968C19.1538 0.512574 19.1538 0.987447 19.4467 1.28034L23.6893 5.52298L19.4467 9.76562C19.1538 10.0585 19.1538 10.5334 19.4467 10.8263C19.7396 11.1192 20.2145 11.1192 20.5074 10.8263L25.2803 6.05331ZM0.75 6.27298L24.75 6.27298L24.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="white"/>
+                  </svg>
+                </span>
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.button_label_2 != blank -%}
+              <a
+                {% if block.settings.button_link_2 == blank %}
+                  role="link" aria-disabled="true"
+                {% else %}
+                  href="{{ block.settings.button_link_2 }}"
+                {% endif %}
+                class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+              >
+                <span>{{- block.settings.button_label_2 | escape -}}</span>
+                <span class="button__icon" aria-hidden="true">
+                  <svg width="26" height="12" viewBox="0 0 26 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.75 4.77298L7.37629e-08 4.77298L-7.37629e-08 6.27298L0.75 6.27298L0.75 4.77298ZM25.2803 6.05331C25.5732 5.76042 25.5732 5.28554 25.2803 4.99265L20.5074 0.21968C19.1538 0.512574 19.4467 1.28034L23.6893 5.52298L19.4467 9.76562C19.1538 10.0585 19.4467 10.5334 19.4467 10.8263C19.7396 11.1192 20.2145 11.1192 20.5074 10.8263L25.2803 6.05331ZM0.75 6.27298L24.75 6.27298L24.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="white"/>
+                  </svg>
+                </span>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if section.settings.banner_bar_text != blank or section.settings.banner_bar_text_mobile != blank -%}
+    <div id="BannerBar-{{ section.id }}">
+      <span class="banner-bar-text-desktop">
+        {{ section.settings.banner_bar_text }}
+      </span>
+      <span class="banner-bar-text-mobile">
+        {{ banner_bar_text_mobile }}
+      </span>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Image Banner V1",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop Banner Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Banner Image",
+      "info": "If left blank, the desktop image will be used on mobile."
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Image Overlay Opacity",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium",
+      "label": "Banner Height"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center",
+      "label": "Desktop Content Alignment"
+    },
+    {
+      "type": "select",
+      "id": "desktop_vertical_alignment",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "center",
+      "label": "Desktop Vertical Alignment"
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center",
+      "label": "Desktop Horizontal Alignment"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 320,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 600,
+      "label": "Content Width"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center",
+      "label": "Mobile Text Alignment"
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center",
+      "label": "Mobile Button Alignment"
+    },
+    {
+      "type": "color",
+      "id": "mobile_text_bg_color",
+      "label": "Mobile Text Area Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Banner Bar"
+    },
+    {
+      "type": "text",
+      "id": "banner_bar_text",
+      "label": "Banner Bar Text (Desktop)",
+      "default": "Sustainable, ethically made clothes in sizes XXS to 6XL"
+    },
+    {
+      "type": "text",
+      "id": "banner_bar_text_mobile",
+      "label": "Banner Bar Text (Mobile)",
+      "info": "Leave blank to use the desktop banner bar text on mobile."
+    },
+    {
+      "type": "color",
+      "id": "banner_bar_bg_color",
+      "label": "Banner Bar Background Color",
+      "default": "#f0f0ec"
+    },
+    {
+      "type": "color",
+      "id": "banner_bar_text_color",
+      "label": "Banner Bar Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "banner_bar_text_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Banner Bar Text Size Desktop",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "banner_bar_text_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Banner Bar Text Size Mobile",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_box",
+      "default": true,
+      "label": "Show Text Box"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "The Gift Guide",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            { "value": "h2", "label": "Small" },
+            { "value": "h1", "label": "Medium" },
+            { "value": "h0", "label": "Large" },
+            { "value": "hxl", "label": "Extra Large" },
+            { "value": "hxxl", "label": "Double Extra Large" }
+          ],
+          "default": "h1",
+          "label": "Heading Size"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+          "label": "Text (Desktop)"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_mobile",
+          "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+          "label": "Text (Mobile)",
+          "info": "Leave blank to use the desktop text on mobile."
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "options": [
+            { "value": "body", "label": "Body" },
+            { "value": "subtitle", "label": "Subtitle" },
+            { "value": "caption-with-letter-spacing", "label": "Caption" }
+          ],
+          "default": "body",
+          "label": "Text Style"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Button 1"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "Shop Now",
+          "label": "Button Label",
+          "info": "Leave blank to hide button"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Button Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_1",
+          "default": false,
+          "label": "Use Secondary Style"
+        },
+        {
+          "type": "header",
+          "content": "Button 2"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Button Label",
+          "info": "Leave blank to hide button"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Button Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_2",
+          "default": true,
+          "label": "Use Secondary Style"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Banner V1",
+      "blocks": [{ "type": "heading" }, { "type": "text" }, { "type": "buttons" }]
+    }
+  ]
+}
+{% endschema %}

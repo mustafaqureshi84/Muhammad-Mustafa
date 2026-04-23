@@ -1,0 +1,1066 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-section-title {
+    color: #000000;
+    margin: 0 0 24px 0;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-grid-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #e0e0e0;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-grid-item:hover img {
+    transform: scale(1.03);
+  }
+
+  #shopify-section-{{ section.id }} .pgh-hotspot {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #F8F8F8E5;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+  }
+
+  #shopify-section-{{ section.id }} .pgh-hotspot:hover {
+    background: #ffffff;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  #shopify-section-{{ section.id }} .pgh-hotspot svg {
+    width: 14px;
+    height: 14px;
+    color: #333;
+  }
+
+  /* ── Overlay ── */
+  #shopify-section-{{ section.id }} .pgh-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  #shopify-section-{{ section.id }} .pgh-overlay.active  { display: block; }
+  #shopify-section-{{ section.id }} .pgh-overlay.visible { opacity: 1; }
+
+  /* ── Popup ── */
+  #shopify-section-{{ section.id }} .pgh-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -48%);
+    background: #ffffff;
+    z-index: 9999;
+    width: 420px;
+    max-width: 95vw;
+    padding: 32px 28px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  #shopify-section-{{ section.id }} .pgh-popup.active  { display: block; }
+  #shopify-section-{{ section.id }} .pgh-popup.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  #shopify-section-{{ section.id }} .pgh-popup-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: #555;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  #shopify-section-{{ section.id }} .pgh-popup-close:hover { color: #000; }
+
+  #shopify-section-{{ section.id }} .pgh-popup-header {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-popup-image {
+    width: 120px;
+    height: 140px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-popup-info { flex: 1; }
+
+  #shopify-section-{{ section.id }} .pgh-popup-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #111;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.01em;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-popup-price {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    margin: 0 0 10px 0;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-popup-description {
+    font-size: 14px;
+    font-weight: 300;
+    color: #000000;
+    line-height: normal;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-popup-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #111;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+  }
+
+  /* Color swatches */
+  #shopify-section-{{ section.id }} .pgh-color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid #d0d0d0;
+    margin-bottom: 18px;
+    background: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-color-option {
+    flex: 1 1 0;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    background: #fff;
+    border: none;
+    border-left: 8px solid transparent;
+    box-sizing: border-box;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+    color: #111;
+    font-weight: 400;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-color-option:last-child {
+    border-right: none;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-color-option.selected {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+  }
+
+  /* Size select - custom dropdown */
+  #shopify-section-{{ section.id }} .pgh-size-select-wrapper {
+    position: relative;
+    width: 100%;
+    border: 1px solid #000000;
+    margin-bottom: 24px;
+    background: #fff;
+    overflow: visible;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-select-trigger {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: 48px;
+    background: #fff;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-select-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    font-size: 14px;
+    color: #333;
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-select-arrow {
+    width: 80px;
+    flex: 0 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #000000;
+    background: #fff;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-select-arrow svg {
+    display: block;
+    transition: transform 0.2s ease;
+    transform-origin: center;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-select-wrapper.open .pgh-size-select-arrow svg {
+    transform: rotate(180deg);
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-options {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0px);
+    left: -1px;
+    right: -1px;
+    background: #fff;
+    border: 1px solid #000000;
+    border-top: none;
+    z-index: 5;
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-select-wrapper.open .pgh-size-options {
+    display: block;
+    border: 1px solid #000000;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-option {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: #fff;
+    color: #111;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .pgh-size-option:hover,
+  #shopify-section-{{ section.id }} .pgh-size-option.selected {
+    background: #f5f5f5;
+  }
+
+  /* No options notice */
+  #shopify-section-{{ section.id }} .pgh-no-options {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 18px;
+  }
+
+  /* Add to cart */
+  #shopify-section-{{ section.id }} .pgh-add-to-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    padding: 16px 24px;
+    background: #111111;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none;
+  }
+  #shopify-section-{{ section.id }} .pgh-add-to-cart:hover { background: #333; }
+  #shopify-section-{{ section.id }} .pgh-add-to-cart svg { width: 30px; height: 12px; }
+  #shopify-section-{{ section.id }} .pgh-add-to-cart.loading { opacity: 0.7; pointer-events: none; }
+
+  /* Cart feedback */
+  #shopify-section-{{ section.id }} .pgh-cart-msg {
+    margin-top: 10px;
+    font-size: 13px;
+    text-align: center;
+    min-height: 18px;
+  }
+  #shopify-section-{{ section.id }} .pgh-cart-msg.success { color: #2a7a2a; }
+  #shopify-section-{{ section.id }} .pgh-cart-msg.error   { color: #c0392b; }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+    #shopify-section-{{ section.id }} .pgh-grid { 
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+    }
+    #shopify-section-{{ section.id }} .pgh-section-title { 
+      text-align: center;
+    }
+    #shopify-section-{{ section.id }} .pgh-popup { 
+      width: 92vw; 
+      padding: 24px 18px 20px;
+    }
+    #shopify-section-{{ section.id }} .pgh-popup-image { 
+      width: 90px;
+    }
+    #shopify-section-{{ section.id }} .pgh-size-select-arrow {
+      width: 72px;
+      flex-basis: 72px;
+    }
+  }
+</style>
+
+{%- assign display_image = product.featured_image -%}
+
+<div class="pgh-section-wrapper">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <h2 class="pgh-section-title h0">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="pgh-grid">
+      {%- for block in section.blocks -%}
+        {%- assign product = block.settings.product -%}
+
+        {%- comment -%} ── Resolve display image ── {%- endcomment -%}
+        {%- if block.settings.image != blank -%}
+          {%- assign display_image_url = block.settings.image | image_url: width: 900 -%}
+          {%- assign display_image_alt = block.settings.image.alt | default: product.title | escape -%}
+          {%- assign popup_image_url   = block.settings.image | image_url: width: 400 -%}
+        {%- elsif product != blank and product.featured_image -%}
+          {%- assign display_image_url = product.featured_image | image_url: width: 900 -%}
+          {%- assign display_image_alt = product.featured_image.alt | default: product.title | escape -%}
+          {%- assign popup_image_url   = product.featured_image | image_url: width: 400 -%}
+        {%- else -%}
+          {%- assign display_image_url = nil -%}
+          {%- assign display_image_alt = '' -%}
+          {%- assign popup_image_url   = '' -%}
+        {%- endif -%}
+
+        {%- comment -%} ── Resolve title / price / description ── {%- endcomment -%}
+        {%- if product != blank -%}
+          {%- assign resolved_title = product.title -%}
+          {%- assign resolved_price = product.price | money -%}
+          {%- assign resolved_desc  = product.description | strip_html | truncatewords: 30 -%}
+          {%- assign product_url    = product.url -%}
+        {%- else -%}
+          {%- assign resolved_title = 'Product' -%}
+          {%- assign resolved_price = '' -%}
+          {%- assign resolved_desc  = '' -%}
+          {%- assign product_url    = '' -%}
+        {%- endif -%}
+
+        {%- comment -%} ── Build color & size option arrays from product variants ── {%- endcomment -%}
+        {%- assign color_option_index = nil -%}
+        {%- assign size_option_index  = nil -%}
+        {%- if product != blank -%}
+          {%- for opt in product.options_with_values -%}
+            {%- assign opt_name_down = opt.name | downcase -%}
+            {%- if opt_name_down == 'color' or opt_name_down == 'colour' -%}
+              {%- assign color_option_index = forloop.index0 -%}
+            {%- endif -%}
+            {%- if opt_name_down == 'size' -%}
+              {%- assign size_option_index = forloop.index0 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- comment -%} Collect unique color values {%- endcomment -%}
+        {%- if color_option_index != nil and product != blank -%}
+          {%- assign color_option = product.options_with_values[color_option_index] -%}
+          {%- assign color_values_arr = color_option.values -%}
+        {%- else -%}
+          {%- assign color_values_arr = nil -%}
+        {%- endif -%}
+
+        {%- comment -%} Collect unique size values {%- endcomment -%}
+        {%- if size_option_index != nil and product != blank -%}
+          {%- assign size_option = product.options_with_values[size_option_index] -%}
+          {%- assign size_values_arr = size_option.values -%}
+        {%- else -%}
+          {%- assign size_values_arr = nil -%}
+        {%- endif -%}
+
+        {%- comment -%} Build a JSON-safe colors string ── {%- endcomment -%}
+        {%- assign color_json = '[]' -%}
+        {%- if color_values_arr != nil -%}
+          {%- assign color_json = '[' -%}
+          {%- for cv in color_values_arr -%}
+            {%- assign color_json = color_json | append: '"' | append: cv | append: '"' -%}
+            {%- unless forloop.last -%}{%- assign color_json = color_json | append: ',' -%}{%- endunless -%}
+          {%- endfor -%}
+          {%- assign color_json = color_json | append: ']' -%}
+        {%- endif -%}
+
+        {%- comment -%} Build a JSON-safe sizes string ── {%- endcomment -%}
+        {%- assign size_json = '[]' -%}
+        {%- if size_values_arr != nil -%}
+          {%- assign size_json = '[' -%}
+          {%- for sv in size_values_arr -%}
+            {%- assign size_json = size_json | append: '"' | append: sv | append: '"' -%}
+            {%- unless forloop.last -%}{%- assign size_json = size_json | append: ',' -%}{%- endunless -%}
+          {%- endfor -%}
+          {%- assign size_json = size_json | append: ']' -%}
+        {%- endif -%}
+
+        {%- comment -%} Build variant map: {color}_{size} -> variant_id {%- endcomment -%}
+        {%- assign variant_map_json = '{' -%}
+        {%- if product != blank -%}
+          {%- for variant in product.variants -%}
+            {%- assign vcolor = '' -%}
+            {%- assign vsize  = '' -%}
+            {%- if color_option_index != nil -%}
+              {%- assign vcolor = variant.options[color_option_index] -%}
+            {%- endif -%}
+            {%- if size_option_index != nil -%}
+              {%- assign vsize = variant.options[size_option_index] -%}
+            {%- endif -%}
+            {%- assign vkey = vcolor | append: '__' | append: vsize -%}
+            {%- assign variant_map_json = variant_map_json | append: '"' | append: vkey | append: '":' | append: variant.id -%}
+            {%- unless forloop.last -%}{%- assign variant_map_json = variant_map_json | append: ',' -%}{%- endunless -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- assign variant_map_json = variant_map_json | append: '}' -%}
+
+        {%- comment -%} First available variant id (default) {%- endcomment -%}
+        {%- if product != blank -%}
+          {%- assign default_variant_id = product.first_available_variant.id | default: product.variants.first.id -%}
+        {%- else -%}
+          {%- assign default_variant_id = 0 -%}
+        {%- endif -%}
+
+        <div class="pgh-grid-item" {{ block.shopify_attributes }}>
+{%- if display_image_url != nil -%}
+  <img
+    src="{{ display_image_url }}"
+    alt="{{ display_image_alt }}"
+    width="{{ display_image.width }}"
+    height="{{ display_image.height }}"
+    loading="lazy"
+  >
+{%- else -%}
+  {{ 'product-1' | placeholder_svg_tag: 'pgh-placeholder-svg' }}
+{%- endif -%}
+
+          <button
+            class="pgh-hotspot"
+            style="left: {{ block.settings.hotspot_x }}%; top: {{ block.settings.hotspot_y }}%;"
+            aria-label="View product details"
+            onclick="pghOpenPopup(this, event)"
+            data-title="{{ resolved_title | escape }}"
+            data-price="{{ resolved_price | escape }}"
+            data-desc="{{ resolved_desc | escape }}"
+            data-img="{{ popup_image_url }}"
+            data-img-alt="{{ display_image_alt }}"
+            data-product-url="{{ product_url }}"
+            data-colors='{{ color_json }}'
+            data-sizes='{{ size_json }}'
+            data-variant-map='{{ variant_map_json }}'
+            data-default-variant="{{ default_variant_id }}"
+            data-section-id="{{ section.id }}"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="7" y1="1" x2="7" y2="13"/>
+              <line x1="1" y1="7" x2="13" y2="7"/>
+            </svg>
+          </button>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<!-- Shared Overlay -->
+<div id="pgh-overlay-{{ section.id }}" class="pgh-overlay" onclick="pghClosePopup('{{ section.id }}')"></div>
+
+<!-- Shared Popup -->
+<div id="pgh-popup-{{ section.id }}" class="pgh-popup" role="dialog" aria-modal="true" aria-label="Product details">
+  <button class="pgh-popup-close" onclick="pghClosePopup('{{ section.id }}')" aria-label="Close">&#215;</button>
+
+  <div class="pgh-popup-header">
+    <img
+  id="pgh-popup-img-{{ section.id }}"
+  class="pgh-popup-image"
+  alt=""
+  width="100%"
+  height="100%"
+>
+    <div class="pgh-popup-info">
+      <h3 id="pgh-popup-title-{{ section.id }}" class="pgh-popup-title"></h3>
+      <p  id="pgh-popup-price-{{ section.id }}" class="pgh-popup-price"></p>
+      <p  id="pgh-popup-desc-{{ section.id }}"  class="pgh-popup-description"></p>
+    </div>
+  </div>
+
+  <!-- Color section -->
+  <div id="pgh-color-section-{{ section.id }}">
+    <p class="pgh-popup-label">Color</p>
+    <div class="pgh-color-options" id="pgh-color-options-{{ section.id }}"></div>
+  </div>
+
+  <!-- Size section -->
+  <div id="pgh-size-section-{{ section.id }}">
+    <p class="pgh-popup-label">Size</p>
+    <div class="pgh-size-select-wrapper" id="pgh-size-wrapper-{{ section.id }}">
+      <div class="pgh-size-select-trigger" onclick="pghToggleSizeDropdown('{{ section.id }}', event)">
+        <span class="pgh-size-select-label" id="pgh-size-label-{{ section.id }}">Choose your size</span>
+        <span class="pgh-size-select-arrow">
+          <svg width="15" height="9" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.06067 1.06067L7.06067 7.06067L13.0607 1.06067" stroke="black" stroke-width="1.5" stroke-linecap="square"/>
+          </svg>
+        </span>
+      </div>
+      <div class="pgh-size-options" id="pgh-size-options-{{ section.id }}"></div>
+    </div>
+  </div>
+
+  <button class="pgh-add-to-cart" id="pgh-atc-{{ section.id }}" onclick="pghAddToCart('{{ section.id }}')">
+    Add to cart
+    <svg viewBox="0 0 30 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 1L29 6L24 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="0" y1="6" x2="28" y2="6" stroke="white" stroke-width="1.5"/>
+    </svg>
+  </button>
+
+  <p class="pgh-cart-msg" id="pgh-cart-msg-{{ section.id }}"></p>
+</div>
+
+<script>
+(function () {
+  /* ── State ── */
+  var state = {
+    sectionId:      '{{ section.id }}',
+    variantMap:     {},
+    selectedColor:  '',
+    selectedSize:   '',
+    defaultVariant: 0,
+    productUrl:     ''
+  };
+
+  /* ── Helpers ── */
+  function $(id) { return document.getElementById(id); }
+  var sid = state.sectionId;
+
+  var ATC_SVG   = '<svg viewBox="0 0 30 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 1L29 6L24 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="0" y1="6" x2="28" y2="6" stroke="white" stroke-width="1.5"/></svg>';
+  var ATC_LABEL = 'Add to cart';
+
+  function closeSizeDropdown() {
+    var wrapper = $('pgh-size-wrapper-' + sid);
+    if (!wrapper) return;
+    wrapper.classList.remove('open');
+  }
+
+  function resolvedVariantId() {
+    var key = state.selectedColor + '__' + state.selectedSize;
+    if (state.variantMap[key]) return state.variantMap[key];
+
+    /* fallback: match by color only */
+    if (state.selectedColor) {
+      for (var k in state.variantMap) {
+        if (k.indexOf(state.selectedColor + '__') === 0) return state.variantMap[k];
+      }
+    }
+
+    /* fallback: match by size only */
+    if (state.selectedSize) {
+      for (var k2 in state.variantMap) {
+        if (k2.indexOf('__' + state.selectedSize) !== -1) return state.variantMap[k2];
+      }
+    }
+
+    return state.defaultVariant;
+  }
+
+  function getReadableColor(value) {
+    return (value || '').trim();
+  }
+
+  /* ── Cart helpers (ported from Comparison Table V1) ── */
+
+  /** Update the theme's cart-count-bubble spans only — never touches the SVG or cart icon link */
+  function updateCartCounts(count) {
+    var cartLink = document.getElementById('cart-icon-bubble');
+    var bubbles  = document.querySelectorAll('.cart-count-bubble');
+
+    /* If no bubble exists yet, create one inside the cart link */
+    if (bubbles.length === 0 && cartLink) {
+      var bubble = document.createElement('div');
+      bubble.className = 'cart-count-bubble';
+      bubble.innerHTML = '<span aria-hidden="true"></span><span class="visually-hidden"></span>';
+      cartLink.appendChild(bubble);
+      bubbles = document.querySelectorAll('.cart-count-bubble');
+    }
+
+    /* Update each bubble (desktop + mobile headers may both have one) */
+    bubbles.forEach(function (b) {
+      b.removeAttribute('hidden');
+      b.style.display = '';
+      var visual = b.querySelector('span[aria-hidden="true"]');
+      if (visual) visual.textContent = count;
+      var sr = b.querySelector('span.visually-hidden');
+      if (sr) sr.textContent = count === 1 ? '1 item' : count + ' items';
+    });
+  }
+
+  /** Fire theme-level cart events so other scripts / drawers stay in sync */
+  function dispatchCartEvents(cart) {
+    try {
+      document.dispatchEvent(new CustomEvent('cart:updated',      { detail: cart }));
+      document.dispatchEvent(new CustomEvent('cart:refresh',      { detail: cart }));
+      window.dispatchEvent( new CustomEvent('theme:cart:updated', { detail: cart }));
+    } catch (e) {
+      console.warn('Could not dispatch cart events', e);
+    }
+  }
+
+  /** Re-render the cart drawer HTML and open it */
+  function refreshCartDrawerAndOpen() {
+    var cartDrawer = document.querySelector('cart-drawer');
+    if (!cartDrawer) return Promise.resolve();
+
+    return fetch('/?section_id=cart-drawer')
+      .then(function (res) { return res.text(); })
+      .then(function (html) {
+        var parser        = new DOMParser();
+        var doc           = parser.parseFromString(html, 'text/html');
+        var newCartDrawer = doc.querySelector('cart-drawer');
+
+        if (newCartDrawer) {
+          var currentInner = cartDrawer.querySelector('.drawer__inner');
+          var newInner     = newCartDrawer.querySelector('.drawer__inner');
+          if (currentInner && newInner) currentInner.innerHTML = newInner.innerHTML;
+          cartDrawer.classList.remove('is-empty');
+        }
+
+        if (typeof cartDrawer.open === 'function') {
+          cartDrawer.open();
+        } else {
+          var drawerEl = cartDrawer.querySelector('#CartDrawer');
+          if (drawerEl) drawerEl.classList.add('active');
+        }
+      })
+      .catch(function (err) { console.error('Error refreshing cart drawer:', err); });
+  }
+
+  /* ── Size dropdown controls ── */
+  window.pghToggleSizeDropdown = function (s, e) {
+    if (e) e.stopPropagation();
+
+    var wrapper = $('pgh-size-wrapper-' + (s || sid));
+    if (!wrapper) return;
+
+    var isOpen = wrapper.classList.contains('open');
+    closeSizeDropdown();
+
+    if (!isOpen) {
+      wrapper.classList.add('open');
+    }
+  };
+
+  window.pghSelectSize = function (s, sizeValue) {
+    state.selectedSize = sizeValue || '';
+
+    var label = $('pgh-size-label-' + (s || sid));
+    if (label) label.textContent = sizeValue || 'Choose your size';
+
+    var wrapper = $('pgh-size-wrapper-' + (s || sid));
+    var options  = $('pgh-size-options-' + (s || sid));
+
+    if (options) {
+      var buttons = options.querySelectorAll('.pgh-size-option');
+      buttons.forEach(function (btn) {
+        btn.classList.toggle('selected', btn.getAttribute('data-size') === sizeValue);
+      });
+    }
+
+    if (wrapper) wrapper.classList.remove('open');
+    pghUpdateVariant(s || sid);
+  };
+
+  /* ── Open popup ── */
+  window.pghOpenPopup = function (btn, e) {
+    if (e) e.stopPropagation();
+
+    var title      = btn.getAttribute('data-title');
+    var price      = btn.getAttribute('data-price');
+    var desc       = btn.getAttribute('data-desc');
+    var imgUrl     = btn.getAttribute('data-img');
+    var imgAlt     = btn.getAttribute('data-img-alt');
+    var colors     = JSON.parse(btn.getAttribute('data-colors')      || '[]');
+    var sizes      = JSON.parse(btn.getAttribute('data-sizes')       || '[]');
+    var variantMap = JSON.parse(btn.getAttribute('data-variant-map') || '{}');
+    var defVariant = parseInt(btn.getAttribute('data-default-variant'), 10) || 0;
+    var productUrl = btn.getAttribute('data-product-url') || '';
+
+    /* Save to state */
+    state.variantMap     = variantMap;
+    state.defaultVariant = defVariant;
+    state.productUrl     = productUrl;
+    state.selectedColor  = '';
+    state.selectedSize   = '';
+
+    /* Header */
+    $('pgh-popup-img-'   + sid).src              = imgUrl;
+    $('pgh-popup-img-'   + sid).alt              = imgAlt;
+    $('pgh-popup-title-' + sid).textContent      = title;
+    $('pgh-popup-price-' + sid).textContent      = price;
+    $('pgh-popup-desc-'  + sid).textContent      = desc;
+
+    /* Color options */
+    var colorSection   = $('pgh-color-section-' + sid);
+    var colorContainer = $('pgh-color-options-' + sid);
+    colorContainer.innerHTML = '';
+
+    if (colors.length) {
+      colorSection.style.display = '';
+      colors.forEach(function (c) {
+        var btn2 = document.createElement('button');
+        btn2.type = 'button';
+        btn2.className = 'pgh-color-option';
+        btn2.textContent = c;
+        btn2.style.borderLeftColor = getReadableColor(c);
+        btn2.onclick = function () { pghSelectColor(btn2, c); };
+        colorContainer.appendChild(btn2);
+      });
+    } else {
+      colorSection.style.display = 'none';
+    }
+
+    /* Size options */
+    var sizeSection = $('pgh-size-section-' + sid);
+    var sizeWrapper = $('pgh-size-wrapper-'  + sid);
+    var sizeOptions = $('pgh-size-options-'  + sid);
+    var sizeLabel   = $('pgh-size-label-'    + sid);
+
+    if (sizeWrapper) sizeWrapper.classList.remove('open');
+    if (sizeLabel)   sizeLabel.textContent = 'Choose your size';
+    if (sizeOptions) sizeOptions.innerHTML = '';
+
+    if (sizes.length) {
+      sizeSection.style.display = '';
+      sizes.forEach(function (s) {
+        var opt = document.createElement('button');
+        opt.type = 'button';
+        opt.className = 'pgh-size-option';
+        opt.setAttribute('data-size', s);
+        opt.textContent = s;
+        opt.onclick = function (evt) {
+          evt.stopPropagation();
+          pghSelectSize('{{ section.id }}', s);
+        };
+        sizeOptions.appendChild(opt);
+      });
+    } else {
+      sizeSection.style.display = 'none';
+    }
+
+    /* Cart message reset */
+    var msg = $('pgh-cart-msg-' + sid);
+    msg.textContent = '';
+    msg.className = 'pgh-cart-msg';
+
+    /* Reset ATC button */
+    var atcBtn = $('pgh-atc-' + sid);
+    atcBtn.innerHTML = ATC_LABEL + ' ' + ATC_SVG;
+    atcBtn.disabled  = false;
+    atcBtn.classList.remove('loading');
+
+    /* Show overlay + popup */
+    var overlay = $('pgh-overlay-' + sid);
+    var popup   = $('pgh-popup-'   + sid);
+    overlay.classList.add('active');
+    popup.classList.add('active');
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        overlay.classList.add('visible');
+        popup.classList.add('visible');
+      });
+    });
+
+    document.body.style.overflow = 'hidden';
+  };
+
+  /* ── Close popup ── */
+  window.pghClosePopup = function (s) {
+    var overlay = $('pgh-overlay-' + (s || sid));
+    var popup   = $('pgh-popup-'   + (s || sid));
+    if (overlay) overlay.classList.remove('visible');
+    if (popup)   popup.classList.remove('visible');
+    closeSizeDropdown();
+
+    setTimeout(function () {
+      if (overlay) overlay.classList.remove('active');
+      if (popup)   popup.classList.remove('active');
+      document.body.style.overflow = '';
+    }, 260);
+  };
+
+  /* Click outside size dropdown closes it */
+  document.addEventListener('click', function (e) {
+    var wrapper = $('pgh-size-wrapper-' + sid);
+    if (!wrapper) return;
+    if (!wrapper.contains(e.target)) {
+      wrapper.classList.remove('open');
+    }
+  });
+
+  /* ── Select color ── */
+  window.pghSelectColor = function (btn, colorValue) {
+    var container = $('pgh-color-options-' + sid);
+    var options   = container.querySelectorAll('.pgh-color-option');
+    options.forEach(function (b) { b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    state.selectedColor = colorValue;
+  };
+
+  /* ── Update variant on size change ── */
+  window.pghUpdateVariant = function (s) {
+    state.selectedSize = state.selectedSize || '';
+  };
+
+  /* ── Add to cart (full drawer flow, matching Comparison Table V1) ── */
+  window.pghAddToCart = function (s) {
+    var variantId    = resolvedVariantId();
+    var atcBtn       = $('pgh-atc-'      + (s || sid));
+    var msg          = $('pgh-cart-msg-' + (s || sid));
+    var originalHTML = ATC_LABEL + ' ' + ATC_SVG;
+
+    if (!variantId) {
+      /* No product linked — navigate to product page */
+      if (state.productUrl) { window.location.href = state.productUrl; }
+      return;
+    }
+
+    atcBtn.classList.add('loading');
+    atcBtn.disabled    = true;
+    atcBtn.textContent = 'Adding…';
+    msg.textContent    = '';
+    msg.className      = 'pgh-cart-msg';
+
+    /* 1. POST to /cart/add.js */
+    fetch('/cart/add.js', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body:    JSON.stringify({ id: variantId, quantity: 1 })
+    })
+    .then(function (r) {
+      if (!r.ok) throw new Error('add-failed');
+      return r.json();
+    })
+    .then(function () {
+      atcBtn.innerHTML = '✓ Added! ' + ATC_SVG;
+
+      /* 2. Fetch updated cart state */
+      return fetch('/cart.js').then(function (r) {
+        if (!r.ok) throw new Error('cart-fetch-failed');
+        return r.json();
+      });
+    })
+    .then(function (cart) {
+      /* 3. Re-render & open the cart drawer */
+      return refreshCartDrawerAndOpen().then(function () { return cart; });
+    })
+    .then(function (cart) {
+      /* 4. Fire theme events — Dawn may re-render the header after these */
+      dispatchCartEvents(cart);
+
+      /* 5. Update bubble count LAST, after Dawn finishes its own DOM mutations */
+      setTimeout(function () {
+        updateCartCounts(cart.item_count || 0);
+      }, 300);
+
+      atcBtn.classList.remove('loading');
+      atcBtn.disabled = false;
+
+      /* Reset button label */
+      setTimeout(function () {
+        atcBtn.innerHTML = originalHTML;
+      }, 1500);
+    })
+    .catch(function (err) {
+      console.error('pghAddToCart error:', err);
+      msg.textContent = 'Could not add to cart. Please try again.';
+      msg.classList.add('error');
+      atcBtn.classList.remove('loading');
+      atcBtn.disabled  = false;
+      atcBtn.innerHTML = originalHTML;
+    });
+  };
+
+  /* ── Escape key ── */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var popup = $('pgh-popup-' + sid);
+      if (popup && popup.classList.contains('active')) pghClosePopup(sid);
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Grid Hotspot",
+  "tag": "section",
+  "class": "product-grid-hotspot",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Tisso vison in the wild"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot_item",
+      "name": "Hotspot Item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Title, price, description, color options, size options and product URL are all pulled automatically from the selected product."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Grid Image (optional)",
+          "info": "If left empty, the product's featured image will be used."
+        },
+        {
+          "type": "header",
+          "content": "Hotspot Position"
+        },
+        {
+          "type": "range",
+          "id": "hotspot_x",
+          "label": "Hotspot Horizontal Position",
+          "info": "0 = left edge, 100 = right edge",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 60,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "hotspot_y",
+          "label": "Hotspot Vertical Position",
+          "info": "0 = top edge, 100 = bottom edge",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 65,
+          "unit": "%"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid Hotspot",
+      "blocks": [
+        { "type": "hotspot_item", "settings": { "hotspot_x": 60, "hotspot_y": 70 } },
+        { "type": "hotspot_item", "settings": { "hotspot_x": 68, "hotspot_y": 60 } },
+        { "type": "hotspot_item", "settings": { "hotspot_x": 75, "hotspot_y": 40 } },
+        { "type": "hotspot_item", "settings": { "hotspot_x": 55, "hotspot_y": 50 } },
+        { "type": "hotspot_item", "settings": { "hotspot_x": 60, "hotspot_y": 55 } },
+        { "type": "hotspot_item", "settings": { "hotspot_x": 70, "hotspot_y": 55 } }
+      ]
+    }
+  ]
+}
+{% endschema %}
