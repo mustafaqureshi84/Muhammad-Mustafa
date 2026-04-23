@@ -1,3 +1,7 @@
+{% comment %}
+  Custom Banner Section - Built for EcomExperts Test
+{% endcomment %}
+
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
@@ -226,6 +230,8 @@
     }
   }
 {%- endstyle -%}
+
+{% comment %} Added separate option of background for both desktop and mobile, added separate description and bar text option for both desktop and mobile {% endcomment %}
 
 {%- liquid
   assign full_width = '100vw'
