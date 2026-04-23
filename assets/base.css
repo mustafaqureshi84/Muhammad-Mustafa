@@ -1229,7 +1229,7 @@ button.shopify-payment-button__button--unbranded {
   display: none !important;
 }
 
-/* Custom Buy Now Button Hover Effect - Slide from Right to Left */
+/* Custom Button Hover Effect - Slide from Right to Left */
 .product-buy-now-custom .shopify-payment-button__button {
   position: relative;
   overflow: hidden;
