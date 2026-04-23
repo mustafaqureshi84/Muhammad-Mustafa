@@ -1,11 +1,21 @@
 {% comment %}
-  Custom Banner Section - Built for EcomExperts Test
+  ================================
+  Custom Banner Section (V1)
+  Built for EcomExperts Test Task
+  Features:
+  - Desktop + Mobile responsive banner
+  - Separate mobile image support
+  - Dual text system (desktop/mobile)
+  - Banner bar with responsive text
+  - Button overlays with SVG icons
+  ================================
 {% endcomment %}
 
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
   {%- style -%}
+    /* Maintain aspect ratio for adaptive height on desktop */
     @media screen and (min-width: 750px) {
       #Banner-{{ section.id }}::before,
       #Banner-{{ section.id }} .banner__media::before {
@@ -17,19 +27,29 @@
   {%- endstyle -%}
 {%- endif -%}
 
-{% comment %} Custom CSS for Image Banner V1 {% endcomment %}
+{% comment %}
+  ================================
+  Core Banner Styling (Desktop First)
+  - Background image handling
+  - Content positioning & layout
+  - Button styles
+  - Banner bar styling
+  ================================
+{% endcomment %}
 
 {%- style -%}
+  /* Main banner wrapper */
   #Banner-{{ section.id }} {
     position: relative;
     overflow: hidden;
   }
 
+  /* Overlay opacity control */
   #Banner-{{ section.id }}::after {
     opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
   }
 
-  /* Desktop: media is absolute behind content */
+  /* Desktop banner media (background image layer) */
   #Banner-{{ section.id }} .banner__media {
     position: absolute;
     inset: 0;
@@ -37,6 +57,7 @@
     overflow: hidden;
   }
 
+  /* Ensure images fully cover container */
   #Banner-{{ section.id }} .banner__media img,
   #Banner-{{ section.id }} .banner__media .placeholder-svg {
     width: 100%;
@@ -45,6 +66,7 @@
     display: block;
   }
 
+  /* Desktop content wrapper */
   #Banner-{{ section.id }} .banner__content {
     position: relative;
     z-index: 2;
@@ -55,32 +77,37 @@
     padding: 60px;
   }
 
+  /* Content box width control */
   #Banner-{{ section.id }} .banner__box {
     max-width: {{ section.settings.content_width }}px;
     width: 100%;
     border-radius: 0;
   }
 
+  /* Heading spacing */
   #Banner-{{ section.id }} .banner__heading {
     margin: 0 0 24px 0;
   }
 
+  /* Text spacing */
   #Banner-{{ section.id }} .banner__text {
     margin: 0 0 32px 0;
     max-width: 100%;
   }
 
+  /* Remove default paragraph margin */
   #Banner-{{ section.id }} .banner__text p {
     margin: 0;
   }
 
+  /* Button layout + icon alignment */
   #Banner-{{ section.id }} .banner__buttons .button {
-    opacity: 1;
     display: inline-flex;
     align-items: center;
     gap: 10px;
   }
 
+  /* Button icon wrapper */
   #Banner-{{ section.id }} .button__icon {
     display: inline-flex;
     align-items: center;
@@ -89,21 +116,25 @@
     flex-shrink: 0;
   }
 
+  /* SVG icon alignment */
   #Banner-{{ section.id }} .button__icon svg {
     display: block;
   }
 
+  /* Button hover effect (icon color change) */
   #Banner-{{ section.id }} .banner__buttons .button:hover .button__icon svg path {
     fill: #000000;
   }
 
-  /* Banner wrapper */
+  /* Wrapper for banner + bar */
   #BannerWrapper-{{ section.id }} {
     position: relative;
     width: 100%;
   }
 
-  /* Banner bar */
+  /* ================================
+     Banner Bar (Top Info Strip)
+     ================================ */
   #BannerBar-{{ section.id }} {
     background-color: {{ section.settings.banner_bar_bg_color }};
     color: {{ section.settings.banner_bar_text_color }};
@@ -114,29 +145,32 @@
     font-weight: 500;
     text-transform: uppercase;
     width: 100%;
-    display: block;
     box-sizing: border-box;
   }
 
+  /* Mobile/Desktop text toggle inside banner bar */
   #BannerBar-{{ section.id }} .banner-bar-text-mobile {
     display: none;
   }
 
-  /* ── Mobile layout ── */
+  /* ================================
+     Mobile Layout Styles
+     ================================ */
   @media screen and (max-width: 749px) {
-    /* The banner itself becomes a flex column so text sits above image */
+
+    /* Convert banner layout to vertical stack */
     #Banner-{{ section.id }} {
       display: flex;
       flex-direction: column;
       overflow: visible;
     }
 
-    /* Hide the desktop absolute-positioned media on mobile */
+    /* Hide desktop image layer */
     #Banner-{{ section.id }} .banner__media--desktop {
       display: none;
     }
 
-    /* Mobile text block: sits above the image, normal flow */
+    /* Mobile text section above image */
     #Banner-{{ section.id }} .banner__mobile-text {
       position: relative;
       z-index: 2;
@@ -145,27 +179,31 @@
       background: {{ section.settings.mobile_text_bg_color }};
     }
 
+    /* Mobile heading spacing */
     #Banner-{{ section.id }} .banner__mobile-text .banner__heading {
       margin: 0 0 16px 0;
     }
 
+    /* Mobile text spacing */
     #Banner-{{ section.id }} .banner__mobile-text .banner__text {
       margin: 0;
     }
 
-    /* Mobile image + button wrapper */
+    /* Mobile image wrapper */
     #Banner-{{ section.id }} .banner__mobile-image-wrap {
       position: relative;
       width: 100%;
       overflow: hidden;
     }
 
+    /* Mobile image container */
     #Banner-{{ section.id }} .banner__media-mobile {
       position: relative;
       width: 100%;
       overflow: hidden;
     }
 
+    /* Mobile image fit */
     #Banner-{{ section.id }} .banner__media-mobile img,
     #Banner-{{ section.id }} .banner__media-mobile .placeholder-svg {
       width: 100%;
@@ -174,7 +212,7 @@
       display: block;
     }
 
-    /* Button floats over the bottom of the mobile image */
+    /* Mobile buttons overlay on image */
     #Banner-{{ section.id }} .banner__mobile-buttons {
       position: absolute;
       bottom: 0;
@@ -186,27 +224,25 @@
       padding: 20px 24px;
     }
 
+    /* Mobile button styling */
     #Banner-{{ section.id }} .banner__mobile-buttons .button {
-      opacity: 1;
       display: inline-flex;
       align-items: center;
       gap: 10px;
     }
 
-    #Banner-{{ section.id }} .banner__mobile-buttons .button:hover .button__icon svg path {
-      fill: #000000;
-    }
-
-    /* Hide the desktop content area on mobile */
+    /* Hide desktop content on mobile */
     #Banner-{{ section.id }} .banner__content--desktop {
       display: none;
     }
 
+    /* Mobile banner bar text size */
     #BannerBar-{{ section.id }} {
       font-size: {{ section.settings.banner_bar_text_size_mobile }}px;
       line-height: 1.4;
     }
 
+    /* Toggle banner bar text */
     #BannerBar-{{ section.id }} .banner-bar-text-desktop {
       display: none;
     }
@@ -216,7 +252,9 @@
     }
   }
 
-  /* On desktop, hide mobile-only elements */
+  /* ================================
+     Desktop-only visibility rules
+     ================================ */
   @media screen and (min-width: 750px) {
     #Banner-{{ section.id }} .banner__mobile-text,
     #Banner-{{ section.id }} .banner__mobile-image-wrap {
@@ -233,7 +271,6 @@
   }
 {%- endstyle -%}
 
-{% comment %} Added separate option of background for both desktop and mobile, added separate description and bar text option for both desktop and mobile {% endcomment %}
 
 {%- liquid
   assign full_width = '100vw'
