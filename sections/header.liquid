@@ -306,6 +306,8 @@
       {%- endif -%}
     {%- endif -%}
 
+    {% comment %} Liquid code for center text and button {% endcomment %}
+
     {%- if section.settings.show_center_text and section.settings.center_text != blank -%}
       <div class="header__center-text">
         <span class="header__center-text-content">
@@ -353,9 +355,12 @@
         {%- endif -%}
       </div>
 
+      {% comment %} Hide Search Icon {% endcomment %}
       {%- unless section.settings.hide_search_icon -%}
         {% render 'header-search', input_id: 'Search-In-Modal' %}
       {%- endunless -%}
+
+      {% comment %} Hide Account Icon {% endcomment %}
 
       {%- unless section.settings.hide_account_icon -%}
         {%- if shop.customer_accounts_enabled -%}
